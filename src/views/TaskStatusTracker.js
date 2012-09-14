@@ -46,17 +46,28 @@ function($, Backbone, _, _s, ui, StageView, template){
                 this.renderStage(stageModel);
             }, this);
 
+            this.renderStatus();
+
         },
 
         renderStage: function(stageModel){
+            var $stageRow = $('<div class="stage-row row"></div>');
+            this.$stages.append($stageRow);
             var stageView = new StageView({
-                model: stageModel
+                model: stageModel,
+                el: $stageRow
             });
-            this.$stages.append(stageView.el);
         },
 
         renderStatus: function(){
-            this.$status.html(JSON.stringify(this.status.toJSON()));
+            var status_code = this.status.get('code');
+            this.$status.removeClass('pending running resolved rejected');
+            this.$status.addClass(status_code);
+            if (status_code == 'resolved'){
+                this.$status.html(this.status.get('msg'));
+            }
+            else if (status_code == 'rejected'){
+            }
         }
 
 	});

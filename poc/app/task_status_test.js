@@ -9,12 +9,24 @@ require([
 
 function($, Backbone, _, _s, ui, TaskStatus){
 
+    randomString = function(n) {
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+        var string_length = n;
+        var randomstring = '';
+        for (var i=0; i<string_length; i++) {
+            var rnum = Math.floor(Math.random() * chars.length);
+            randomstring += chars.substring(rnum,rnum+1);
+        }
+        return randomstring;
+    };
+
     var stages = new Backbone.Collection();
     var num_stages = 5;
     for (var i = 1; i < num_stages + 1 ; i++){
+        label = randomString(Math.floor(Math.random() * 50));
         var stage = new Backbone.Model({
             id: i,
-            label: 'Stage ' + i
+            label: _s.sprintf('Stage %s (%s)', i, label)
         });
         stages.add(stage);
     }
@@ -34,16 +46,20 @@ function($, Backbone, _, _s, ui, TaskStatus){
         var task_status = {};
         var i = (fakeStageCounter % num_stages);
 
+        var fake_stages = {};
         if (i == 0 && ! first){
+            fake_stages[num_stages] = {
+                status: {
+                    code: 'resolved',
+                    msg: 'completed!'
+                }
+            };
+
             task_status.code = 'resolved';
             task_status.msg = 'Task Complete!';
         }
         else{
-            task_status.code = 'pending';
-            task_status.msg = 'running...';
             first = false;
-
-            var fake_stages = {};
             _.each(stages.models, function(stageModel){
                 stage_id = parseInt(stageModel.id);
                 if (stage_id < (i+1)){
@@ -63,6 +79,9 @@ function($, Backbone, _, _s, ui, TaskStatus){
                     };
                 }
             });
+
+            task_status.code = 'running';
+            task_status.msg = 'running...';
         }
 
         var data = {
@@ -115,7 +134,9 @@ function($, Backbone, _, _s, ui, TaskStatus){
             console.log('resolved');
         }
         else{
-            var deferred = doFakeTaskRequest();
+            var deferred = doFakeTaskRequest({
+                delay: 200 + Math.floor(Math.random() * 1000)
+            });
             deferred.done(onReceiveTaskData);
         }
     };

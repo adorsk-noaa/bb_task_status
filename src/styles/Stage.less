@@ -1,15 +1,34 @@
 @import "common.less";
 
 .task-status-stage{
+    .icon-cell{
+        width: 18px;
+        height: 18px;
+    }
+
+    .label{
+        padding: @padding_tighter @padding_looser;
+        text-align: center;
+    }
+    .icon{
+        width: 16px;
+        height: 16px;
+        background-repeat: no-repeat;
+        background-position: center;
+        float: right;
+    }
+
     &.pending{
         color: gray;
     }
 
     &.running {
         font-weight: bold;
+        .icon{ background-image: url('images/loading_16x16.gif') }
     }
 
     &.resolved {
+        .icon{ background-image: url('images/check_16x16.png') }
     }
 
     &.rejected {

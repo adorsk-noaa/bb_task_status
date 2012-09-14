@@ -3,5 +3,42 @@
 @import "Stage.less";
 
 .task-status-tracker {
+    > .inner {
+        padding: @padding_normal;
+
+        .stages-container, .status-container{
+            margin-left: @padding_normal;
+            margin-right: @padding_normal;
+        }
+
+        .stages-container{
+            margin-bottom: @padding_looser;
+        }
+
+        .stages{
+            width: 100%;
+        }
+
+        .status {
+            padding: @padding_looser;
+            border-style: solid;
+            border-width: 0;
+
+            &.resolved, &.rejected{
+                border-width: medium;
+            }
+
+            &.resolved{
+                border-color: green;
+                background-color: #ccebcc;
+            }
+
+            &.rejected{
+                border-color: red;
+                background-color: #ebcccc;
+            }
+        }
+    }
+
 }
 
