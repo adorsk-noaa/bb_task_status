@@ -67,6 +67,7 @@ function($, Backbone, _, _s, ui, StageView, template){
                 this.$status.html(this.status.get('msg'));
             }
             else if (status_code == 'rejected'){
+                this.$status.html(this.status.get('msg'));
             }
         }
 
