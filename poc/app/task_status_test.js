@@ -57,6 +57,7 @@ function($, Backbone, _, _s, ui, TaskStatus){
 
             task_status.code = 'resolved';
             task_status.msg = 'Task Complete!';
+            task_status.progress = 100.0;
         }
         else{
             first = false;
@@ -82,6 +83,7 @@ function($, Backbone, _, _s, ui, TaskStatus){
 
             task_status.code = 'running';
             task_status.msg = 'running...';
+            task_status.progress = 100 * i/num_stages;
         }
 
         var data = {
@@ -145,6 +147,6 @@ function($, Backbone, _, _s, ui, TaskStatus){
     taskDeferred.done(onReceiveTaskData);
 
 	$(document).ready(function(){
-        console.log('yo');
+        console.log("document ready");
 	});
 });

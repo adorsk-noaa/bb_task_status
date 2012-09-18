@@ -6,9 +6,22 @@
     > .inner {
         padding: @padding_normal;
 
-        .stages-container, .status-container{
+        .stages-container, .status-container, .progress-bar-container{
             margin-left: @padding_normal;
             margin-right: @padding_normal;
+        }
+
+        .progress-bar-container{
+            margin-bottom: @padding_normal;
+
+            .progress-bar{
+                height: 22px;
+                .ui-progressbar-value{
+                    background-color: #F6A828;
+                    background-image: none;
+                    background-repeat: repeat-x;
+                }
+            }
         }
 
         .stages-container{
@@ -23,22 +36,35 @@
             padding: @padding_looser;
             border-style: solid;
             border-width: 0;
+        }
+    }
 
-            &.resolved, &.rejected{
-                border-width: medium;
-            }
+    &.running{
+        .progress-bar.ui-progressbar .ui-progressbar-value{
+            background-image: url('images/pbar-ani.gif');
+        }
+    }
 
-            &.resolved{
-                border-color: green;
-                background-color: #ccebcc;
-            }
+    &.resolved, &.rejected{
+        .status {
+            border-width: medium;
+        }
+    }
 
-            &.rejected{
-                border-color: red;
-                background-color: #ebcccc;
-            }
+    &.resolved{
+        .status {
+            border-color: green;
+            background-color: #ccebcc;
+        }
+    }
+
+    &.rejected{
+        .status {
+            border-color: red;
+            background-color: #ebcccc;
         }
     }
 
 }
+
 

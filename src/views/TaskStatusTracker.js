@@ -12,7 +12,12 @@ function($, Backbone, _, _s, ui, StageView, template){
 	var TaskStatusTrackerView = Backbone.View.extend({
         events: {},
 
-		initialize: function(){
+		initialize: function(opts){
+            this.opts = opts;
+            if (! this.opts.hasOwnProperty('progressBar')){
+                this.opts.progressBar = true;
+            }
+
             $(this.el).addClass('task-status-tracker');
 
             // @TODO: Should this go in model definitions?
@@ -39,6 +44,11 @@ function($, Backbone, _, _s, ui, StageView, template){
             var html = _.template(template, {model: this.model});
             $(this.el).html(html);
 
+            if (this.opts.progressBar){
+                this.$progressBar = $('.progress-bar', this.el);
+                this.$progressBar.progressbar({value: 1});
+            }
+
             this.$status = $('.status', this.el);
 
             this.$stages = $('.stages', this.el);
@@ -61,13 +71,20 @@ function($, Backbone, _, _s, ui, StageView, template){
 
         renderStatus: function(){
             var status_code = this.status.get('code');
-            this.$status.removeClass('pending running resolved rejected');
-            this.$status.addClass(status_code);
+            $(this.el).removeClass('pending running resolved rejected');
+            $(this.el).addClass(status_code);
             if (status_code == 'resolved'){
                 this.$status.html(this.status.get('msg'));
             }
             else if (status_code == 'rejected'){
                 this.$status.html(this.status.get('msg'));
+            }
+
+            if (this.opts.progressBar){
+                this.$progressBar.progressbar(
+                    'value', 
+                    Math.max(1, this.status.get('progress') || 0)
+                );
             }
         }
 
