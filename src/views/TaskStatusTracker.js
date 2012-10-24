@@ -1,9 +1,9 @@
 define([
 	"jquery",
-	"use!backbone",
-	"use!underscore",
+	"backbone",
+	"underscore",
 	"_s",
-	"use!ui",
+	"ui",
 	"./Stage",
 	"text!./templates/TaskStatusTracker.html"
 		],

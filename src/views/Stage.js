@@ -1,9 +1,9 @@
 define([
 	"jquery",
-	"use!backbone",
-	"use!underscore",
+	"backbone",
+	"underscore",
 	"_s",
-	"use!ui",
+	"ui",
 	"text!./templates/Stage.html"
 		],
 function($, Backbone, _, _s, ui, template){
